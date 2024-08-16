@@ -73,59 +73,51 @@ class DetailScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text(
-                        product.longDesc,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[700],
+                      Flexible(
+                        child: Text(
+                          product.longDesc,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[700],
+                          ),
                         ),
                       ),
                       SizedBox(height: 20),
-                      Row(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              Provider.of<CartProvider>(context, listen: false)
-                                  .addItem(product);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('${product.name} added to cart!'),
-                                  duration: Duration(seconds: 2),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF003B72),
-                              foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
+                      Flexible(
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Provider.of<CartProvider>(context, listen: false)
+                                    .addItem(product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${product.name} added to cart!'),
+                                    duration: Duration(seconds: 2),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.add_shopping_cart),
+                              color: Color(0xFF003B72),
+                              iconSize: 32.0,
                             ),
-                            child: Text('Add to Cart'),
-                          ),
-                          SizedBox(width: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CartScreen(),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF003B72),
-                              foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
+                            SizedBox(width: 10),
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CartScreen(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.shopping_cart),
+                              color: Color(0xFF003B72),
+                              iconSize: 32.0,
                             ),
-                            child: Text('View Cart'),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

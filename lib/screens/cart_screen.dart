@@ -21,12 +21,19 @@ class CartScreen extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 final cartItem = cart.items.values.toList()[index];
                 return ListTile(
-                  leading: Image.network(cartItem.product.image),
                   title: Text(cartItem.product.name),
-                  subtitle: Text(
-                      'Quantity: ${cartItem.quantity} - Fragrance: ${cartItem.product.fragrance}'),
-                  trailing: Text(
-                    '\$${(cartItem.product.price * cartItem.quantity).toStringAsFixed(2)}',
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Quantity: ${cartItem.quantity} - Fragrance: ${cartItem.product.fragrance}'),
+                      Text('Price: \$${(cartItem.product.price * cartItem.quantity).toStringAsFixed(2)}'),
+                    ],
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.remove_circle_outline, color: Colors.red),
+                    onPressed: () {
+                      cart.removeItem(cartItem.product.name);
+                    },
                   ),
                 );
               },

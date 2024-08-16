@@ -88,263 +88,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                  elevation: 6.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Delivery Address',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF003B72),
-                          ),
-                        ),
-                        SizedBox(height: 16.0),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'First Name',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: _validateName,
-                              ),
-                            ),
-                            SizedBox(width: 16.0),
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Last Name',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: _validateName,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Street Address',
-                            labelStyle: TextStyle(color: Color(0xFF003B72)),
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your street address';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Apt/Suite/Floor (Optional)',
-                            labelStyle: TextStyle(color: Color(0xFF003B72)),
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        SizedBox(height: 16.0),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'City',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your city';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 16.0),
-                            Expanded(
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelText: 'State',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                items: [
-                                  'Alberta',
-                                  'British Columbia',
-                                  'Manitoba',
-                                  'New Brunswick',
-                                  'Newfoundland and Labrador',
-                                  'Northwest Territories',
-                                  'Nova Scotia',
-                                  'Nunavut',
-                                  'Ontario',
-                                  'Prince Edward Island',
-                                  'Quebec',
-                                  'Saskatchewan',
-                                  'Yukon',
-                                ].map((String state) {
-                                  return DropdownMenuItem<String>(
-                                    value: state,
-                                    child: Text(state),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {},
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please select your state';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 16.0),
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Zip Code',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: _validateZipCode,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 16.0),
-                        CheckboxListTile(
-                          title: Text(
-                            'Use as billing address',
-                            style: TextStyle(color: Color(0xFF003B72)),
-                          ),
-                          value: _useAsBillingAddress,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _useAsBillingAddress = value ?? true;
-                            });
-                          },
-                          activeColor: Color(0xFF003B72),
-                          checkColor: Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                _buildAddressCard(),
                 SizedBox(height: 16.0),
-
-                Card(
-                  elevation: 6.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Contact Information',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF003B72),
-                          ),
-                        ),
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Email Address',
-                            labelStyle: TextStyle(color: Color(0xFF003B72)),
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: _validateEmail,
-                        ),
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Phone Number',
-                            labelStyle: TextStyle(color: Color(0xFF003B72)),
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: _validatePhoneNumber,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                _buildContactCard(),
                 SizedBox(height: 16.0),
-
-                Card(
-                  elevation: 6.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Order Summary',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF003B72),
-                          ),
-                        ),
-                        SizedBox(height: 16.0),
-                        Divider(color: Colors.grey[300]),
-                        SizedBox(height: 8.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Subtotal', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-                            Text('\$${subtotal.toStringAsFixed(2)}', style: TextStyle(fontSize: 16.0)),
-                          ],
-                        ),
-                        SizedBox(height: 8.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Tax (13.5%)', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-                            Text('\$${tax.toStringAsFixed(2)}', style: TextStyle(fontSize: 16.0)),
-                          ],
-                        ),
-                        SizedBox(height: 8.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Shipping Fee', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-                            Text('\$${shippingFee.toStringAsFixed(2)}', style: TextStyle(fontSize: 16.0)),
-                          ],
-                        ),
-                        SizedBox(height: 8.0),
-                        Divider(color: Colors.grey[300]),
-                        SizedBox(height: 8.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Total', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Color(0xFF003B72))),
-                            Text('\$${total.toStringAsFixed(2)}', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Color(0xFF003B72))),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-
+                _buildOrderSummaryCard(subtotal, tax, shippingFee, total),
+                SizedBox(height: 24.0),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
@@ -360,7 +109,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0),
                     ),
                     child: Text(
-                      'Checkout',
+                      'Place Order',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -374,6 +123,255 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildAddressCard() {
+    return Card(
+      elevation: 6.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Delivery Address',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF003B72),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            // Vertical layout for First Name and Last Name
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'First Name',
+                    labelStyle: TextStyle(color: Color(0xFF003B72)),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: _validateName,
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Last Name',
+                    labelStyle: TextStyle(color: Color(0xFF003B72)),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: _validateName,
+                ),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Street Address',
+                labelStyle: TextStyle(color: Color(0xFF003B72)),
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your street address';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Apt/Suite/Floor (Optional)',
+                labelStyle: TextStyle(color: Color(0xFF003B72)),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'City',
+                    labelStyle: TextStyle(color: Color(0xFF003B72)),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your city';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'State',
+                    labelStyle: TextStyle(color: Color(0xFF003B72)),
+                    border: OutlineInputBorder(),
+                  ),
+                  items: [
+                    'Alberta',
+                    'British Columbia',
+                    'Manitoba',
+                    'New Brunswick',
+                    'Newfoundland and Labrador',
+                    'Northwest Territories',
+                    'Nova Scotia',
+                    'Nunavut',
+                    'Ontario',
+                    'Prince Edward Island',
+                    'Quebec',
+                    'Saskatchewan',
+                    'Yukon',
+                  ].map((String state) {
+                    return DropdownMenuItem<String>(
+                      value: state,
+                      child: Text(state),
+                    );
+                  }).toList(),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select your state';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Zip Code',
+                    labelStyle: TextStyle(color: Color(0xFF003B72)),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: _validateZipCode,
+                ),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            CheckboxListTile(
+              title: Text(
+                'Use as billing address',
+                style: TextStyle(color: Color(0xFF003B72)),
+              ),
+              value: _useAsBillingAddress,
+              onChanged: (bool? value) {
+                setState(() {
+                  _useAsBillingAddress = value ?? true;
+                });
+              },
+              activeColor: Color(0xFF003B72),
+              checkColor: Colors.white,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContactCard() {
+    return Card(
+      elevation: 6.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Contact Information',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF003B72),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Email Address',
+                labelStyle: TextStyle(color: Color(0xFF003B72)),
+                border: OutlineInputBorder(),
+              ),
+              validator: _validateEmail,
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Phone Number',
+                labelStyle: TextStyle(color: Color(0xFF003B72)),
+                border: OutlineInputBorder(),
+              ),
+              validator: _validatePhoneNumber,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrderSummaryCard(double subtotal, double tax, double shippingFee, double total) {
+    return Card(
+      elevation: 6.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Order Summary',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF003B72),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            _buildOrderSummaryRow('Subtotal', subtotal),
+            _buildOrderSummaryRow('Tax (13.5%)', tax),
+            _buildOrderSummaryRow('Shipping Fee', shippingFee),
+            SizedBox(height: 16.0),
+            Divider(thickness: 2.0),
+            SizedBox(height: 16.0),
+            _buildOrderSummaryRow('Total', total, isTotal: true),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrderSummaryRow(String title, double value, {bool isTotal = false}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+            color: Color(0xFF003B72),
+          ),
+        ),
+        Text(
+          '\$${value.toStringAsFixed(2)}',
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+            color: Color(0xFF003B72),
+          ),
+        ),
+      ],
     );
   }
 }
