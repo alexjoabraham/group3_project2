@@ -40,14 +40,8 @@ class ProductScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: GridView.builder(
+        child: ListView.builder(
           padding: EdgeInsets.all(8.0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, // Two columns in the grid
-            crossAxisSpacing: 8.0, // Horizontal spacing between cards
-            mainAxisSpacing: 8.0, // Vertical spacing between cards
-            childAspectRatio: 0.75, // Aspect ratio for card height/width
-          ),
           itemCount: products.length,
           itemBuilder: (context, index) {
             final item = products[index];
