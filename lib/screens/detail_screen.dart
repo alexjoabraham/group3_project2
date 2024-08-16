@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
-import 'checkout_screen.dart';
+import 'package:group3_project2/models/product.dart';
+import 'package:group3_project2/providers/provider.dart';
+import 'package:group3_project2/screens/cart_screen.dart';
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatelessWidget {
   final Product product;
@@ -11,9 +13,11 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.name, style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+        title: Text(
+          product.name,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Color(0xFF003B72),
@@ -46,7 +50,6 @@ class DetailScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 16.0),
-
                 Expanded(
                   flex: 1,
                   child: Column(
@@ -78,24 +81,53 @@ class DetailScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CheckoutScreen(cartItems: [product]),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              // Add the product to the cart
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .addItem(product);
+                              // Show a toast message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${product.name} added to cart!'),
+                                  duration: Duration(seconds: 2),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF003B72),
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF003B72),
-                          foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                            child: Text('Add to Cart'),
                           ),
-                        ),
-                        child: Text('Buy Now'),
+                          SizedBox(width: 10),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartScreen(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF003B72),
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                            child: Text('View Cart'),
+                          ),
+                        ],
                       ),
                     ],
                   ),

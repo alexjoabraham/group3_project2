@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+// import '../models/product.dart';
+import 'package:group3_project2/models/product.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final List<Product> cartItems;
+  final List<CartItem> cartItems;
 
   CheckoutScreen({required this.cartItems});
 
@@ -16,7 +17,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double subtotal = widget.cartItems.fold(0, (sum, item) => sum + item.price);
+    double subtotal = widget.cartItems.fold(0, (sum, item) => sum + item.product.price * item.quantity);
     double tax = subtotal * 0.135;
     double shippingFee = 8.99;
     double total = subtotal + tax + shippingFee;
@@ -24,9 +25,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Checkout', style: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-          ),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
         ),
         backgroundColor: Color(0xFF003B72), // Primary blue color
         elevation: 0,
@@ -142,7 +143,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   labelStyle: TextStyle(color: Color(0xFF003B72)),
                                   border: OutlineInputBorder(),
                                 ),
-                                items: ['Alberta', 'Ontario', 'British Columbia']
+                                items: [
+                                  'Alberta',
+                                  'British Columbia',
+                                  'Manitoba',
+                                  'New Brunswick',
+                                  'Newfoundland and Labrador',
+                                  'Northwest Territories',
+                                  'Nova Scotia',
+                                  'Nunavut',
+                                  'Ontario',
+                                  'Prince Edward Island',
+                                  'Quebec',
+                                  'Saskatchewan',
+                                  'Yukon',
+                                ]
                                     .map((String state) {
                                   return DropdownMenuItem<String>(
                                     value: state,
@@ -209,7 +224,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Contact Info',
+                          'Contact Information',
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -217,40 +232,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                         SizedBox(height: 16.0),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Email for Order Tracking',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 16.0),
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Phone for Delivery Contact',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your phone number';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Email Address',
+                            labelStyle: TextStyle(color: Color(0xFF003B72)),
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email address';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 16.0),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Phone Number',
+                            labelStyle: TextStyle(color: Color(0xFF003B72)),
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your phone number';
+                            }
+                            return null;
+                          },
                         ),
                       ],
                     ),
@@ -278,142 +285,60 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                         SizedBox(height: 16.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Order Subtotal:', style: TextStyle(color: Colors.black87)),
-                            Text('\$${subtotal.toStringAsFixed(2)}', style: TextStyle(color: Colors.black87)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Tax (13.5%):', style: TextStyle(color: Colors.black87)),
-                            Text('\$${tax.toStringAsFixed(2)}', style: TextStyle(color: Colors.black87)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Shipping Fee:', style: TextStyle(color: Colors.black87)),
-                            Text('\$${shippingFee.toStringAsFixed(2)}', style: TextStyle(color: Colors.black87)),
-                          ],
-                        ),
+                        ...widget.cartItems.map((item) {
+                          return ListTile(
+                            title: Text(item.product.name),
+                            trailing: Text(
+                              '\$${(item.product.price * item.quantity).toStringAsFixed(2)}',
+                            ),
+                          );
+                        }).toList(),
                         SizedBox(height: 16.0),
                         Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Total:',
-                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                            ),
-                            Text(
-                              '\$${total.toStringAsFixed(2)}',
-                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-
-                // Payment Section
-                Card(
-                  elevation: 6.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                        SizedBox(height: 8.0),
                         Text(
-                          'Payment',
+                          'Subtotal: \$${subtotal.toStringAsFixed(2)}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 8.0),
+                        Text(
+                          'Tax (13.5%): \$${tax.toStringAsFixed(2)}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 8.0),
+                        Text(
+                          'Shipping Fee: \$${shippingFee.toStringAsFixed(2)}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 8.0),
+                        Divider(),
+                        SizedBox(height: 8.0),
+                        Text(
+                          'Total: \$${total.toStringAsFixed(2)}',
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF003B72), // Primary blue color
                           ),
                         ),
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Card Number',
-                            labelStyle: TextStyle(color: Color(0xFF003B72)),
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your card number';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: 16.0),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Expiration Date (MM/YY)',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                keyboardType: TextInputType.datetime,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter expiration date';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 16.0),
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'CVV',
-                                  labelStyle: TextStyle(color: Color(0xFF003B72)),
-                                  border: OutlineInputBorder(),
-                                ),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter CVV';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-
-                // Place Order Button
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        Navigator.pushNamed(context, '/thankyou');
-                      }
-                    },
-                    child: Text('Place Order', style: TextStyle(
-                      color: Colors.white,),),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF003B72), // Primary blue color
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+                SizedBox(height: 24.0),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      Navigator.pushNamed(context, '/thankyou');
+                    }
+                  },
+                  child: Text('Place Order'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF003B72), // Primary blue color
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                 ),

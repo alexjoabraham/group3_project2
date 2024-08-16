@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group3_project2/models/product.dart';
+import 'package:group3_project2/providers/provider.dart';
+import 'package:group3_project2/screens/cart_screen.dart';
 import 'package:group3_project2/screens/detail_screen.dart';
 import 'package:group3_project2/screens/home_screen.dart';
 import 'package:group3_project2/screens/product_screen.dart';
 import 'package:group3_project2/screens/thank_you_screen.dart';
+import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -47,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomeScreen(),
         '/products': (context) => ProductScreen(),
         '/thankyou': (context) => ThankYouScreen(),
+        '/cart': (context) => CartScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/product_details') {

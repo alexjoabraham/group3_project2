@@ -12,10 +12,6 @@ class ThankYouScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/thank_you.png',
-              height: 200,
-            ),
             SizedBox(height: 20),
             Text(
               'Your order has been placed successfully!',
