@@ -37,7 +37,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       product.name,
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
@@ -48,7 +48,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       product.desc,
                       style: TextStyle(
-                        fontSize: 12.0,
+                        fontSize: 16.0,
                         color: Colors.grey[700],
                       ),
                       maxLines: 2,
@@ -58,7 +58,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       '\$${product.price.toStringAsFixed(2)}',
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 18.0,
                         color: Color(0xFF003B72),
                         fontWeight: FontWeight.w700,
                       ),
