@@ -17,61 +17,59 @@ class ProductCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
                 child: Image.asset(
                   product.image,
                   fit: BoxFit.cover,
-                  height: 120.0,
-                  width: 120.0,
                 ),
               ),
-              SizedBox(width: 16.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      product.name,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                        fontFamily: 'Roboto',
-                      ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    product.name,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                      // fontFamily: 'Roboto',
                     ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      product.desc,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey[700],
-                        fontFamily: 'Roboto',
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4.0),
+                  Text(
+                    product.desc,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.grey[700],
+                      fontFamily: 'Roboto',
                     ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      '\$${product.price.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Color(0xFF003B72),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'Roboto',
-                      ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4.0),
+                  Text(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Color(0xFF003B72),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Roboto',
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

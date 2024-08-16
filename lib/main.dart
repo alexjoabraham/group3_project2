@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:group3_project2/models/product.dart';
 import 'package:group3_project2/screens/detail_screen.dart';
 import 'package:group3_project2/screens/home_screen.dart';
 import 'package:group3_project2/screens/product_screen.dart';
 import 'package:group3_project2/screens/thank_you_screen.dart';
 
-import 'models/product.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
+        textTheme: GoogleFonts.latoTextTheme(
+          Theme.of(context).textTheme,
+        ),
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF003B72)),
         useMaterial3: true,
       ),

@@ -13,6 +13,9 @@ class ProductScreen extends StatelessWidget {
     Product(name: 'Burberry', desc: 'Dark Berries, Jasmine', longDesc: 'Burberry Her Eau de Parfum for women is an artful blend of berries elevated by spirited jasmine and violet and smoothed out with amber and musk. A multifaceted, magnetic fruity gourmand and the scent of freedom.', fragrance: 'Floral', price: 165.9, image: 'assets/images/BURBERRY Her Eau de Parfum.webp'),
     Product(name: 'Tom Ford', desc: 'Rare Oud Wood, Sandalwood', longDesc: 'A composition of exotic, smoky woods including rare oud, sandalwood, rosewood, eastern spices, and sensual amber revealing oud‘s rich and compelling power.', fragrance: 'Earthy and Woody', price: 380.78, image: 'assets/images/TOM FORD Oud Wood Eau de Parfum.webp'),
     Product(name: 'Armani', desc: 'Marine Notes, Cypress, Musk', longDesc: 'Acqua di Giò Profondo Eau de Parfum is a captivating fragrance with marine and green mandarin notes. A masculine blend of lavandin and rosemary combines with a base of cedarwood and patchouli for a lasting, enveloping scent.', fragrance: 'Earthy and Woody', price: 135.67, image: 'assets/images/Armani Beauty Acqua di Giò Profondo Eau de Parfum.webp'),
+    Product(name: 'Yves Saint Laurent', desc: 'Lavender, Orchid, Vanilla', longDesc: 'Described by perfumers as floral, creamy, vanillic, and spicy with a slight smokiness, the captivating, sensual scent of orchid burns through the melting floral heart of LIBRE Intense, matching the honeyed facets of burnt orange blossom, smooth vanilla, and glowing amber accord built around grisalva classic ambergris note.', fragrance: 'Warm Floral', price: 170.99, image: 'assets/images/Yves Saint Laurent LIBRE Eau de Parfum.webp'),
+    Product(name: 'Gucci', desc: 'Jasmine, Tuberose', longDesc: 'Gucci Bloom Eau de Parfum Intense is a mesmerizing, deep-floral Gucci fragrance inspired by the magnetic forces of moonlight that encourages all to bloom into their truest selves.', fragrance: 'Classic Florals', price: 227.59, image: 'assets/images/Gucci Bloom Eau de Parfum.webp'),
+    Product(name: 'Dior', desc: 'Rose, Neroli, Orange', longDesc: 'Poison Girl is a floral gourmand that seduces with a fruity floral top note and the addictive base. A pairing of icy-cool and juicy oranges complement each other while armfuls of sensual flowers introduce a spirited hot and cold ambiance. Lastly, tonka bean and vanilla notes spread their sensual and bittersweet caress.', fragrance: 'Warm & Sweet Gourmands', price: 182.59, image: 'assets/images/Dior Poison Girl.webp'),
   ];
 
   @override
@@ -37,23 +40,26 @@ class ProductScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+        child: GridView.builder(
+          padding: EdgeInsets.all(8.0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, // Two columns in the grid
+            crossAxisSpacing: 8.0, // Horizontal spacing between cards
+            mainAxisSpacing: 8.0, // Vertical spacing between cards
+            childAspectRatio: 0.75, // Aspect ratio for card height/width
+          ),
           itemCount: products.length,
           itemBuilder: (context, index) {
             final item = products[index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ProductCard(
-                product: item,
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/product_details',
-                    arguments: item,
-                  );
-                },
-              ),
+            return ProductCard(
+              product: item,
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  '/product_details',
+                  arguments: item,
+                );
+              },
             );
           },
         ),
