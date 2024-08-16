@@ -5,8 +5,12 @@ class ThankYouScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Thank You!'),
-        backgroundColor: Color(0xFF003B72), // Updated to match your theme
+        title: Text('Thank You!',style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        ),
+        backgroundColor: Color(0xFF003B72),
       ),
       body: Center(
         child: Column(
@@ -39,7 +43,7 @@ class ThankYouScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                backgroundColor: Color(0xFF003B72), // Updated to match your theme
+                backgroundColor: Color(0xFF003B72),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),

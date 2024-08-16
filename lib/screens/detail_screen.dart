@@ -85,10 +85,8 @@ class DetailScreen extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              // Add the product to the cart
                               Provider.of<CartProvider>(context, listen: false)
                                   .addItem(product);
-                              // Show a toast message
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('${product.name} added to cart!'),

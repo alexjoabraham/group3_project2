@@ -33,7 +33,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (!phoneRegExp.hasMatch(value)) {
       return 'Please enter a valid phone number';
     }
-    if (value.length != 10) {  // Assuming a 10-digit phone number
+    if (value.length != 10) {
       return 'Phone number should be 10 digits';
     }
     return null;
@@ -88,7 +88,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Delivery Address Section
                 Card(
                   elevation: 6.0,
                   shape: RoundedRectangleBorder(
@@ -244,7 +243,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 SizedBox(height: 16.0),
 
-                // Contact Info Section
                 Card(
                   elevation: 6.0,
                   shape: RoundedRectangleBorder(
@@ -287,7 +285,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 SizedBox(height: 16.0),
 
-                // Order Summary Section
                 Card(
                   elevation: 6.0,
                   shape: RoundedRectangleBorder(
@@ -348,12 +345,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 SizedBox(height: 16.0),
 
-                // Checkout Button
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Form is valid, proceed to payment or order confirmation.
                         Navigator.pushNamed(context, '/thankyou');
                       }
                     },

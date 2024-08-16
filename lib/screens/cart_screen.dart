@@ -40,10 +40,9 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0), // Padding below the button
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: ElevatedButton(
               onPressed: () {
-                // Navigate to the CheckoutScreen with the list of CartItems
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -53,7 +52,7 @@ class CartScreen extends StatelessWidget {
               },
               child: Text('Checkout'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF003B72), // Primary blue color
+                backgroundColor: Color(0xFF003B72),
                 foregroundColor: Colors.white,
                 padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
                 shape: RoundedRectangleBorder(
